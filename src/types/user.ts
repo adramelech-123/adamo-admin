@@ -9,6 +9,9 @@ export interface UserData {
   doc_num: string;
   country: string;
   finalized: boolean;
+  authenticity_score: string;
+  cursor_check: string;
+  id_presence: string;
 }
 
 export type EditableUserData = Partial<UserData>;

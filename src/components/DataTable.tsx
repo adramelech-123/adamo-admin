@@ -66,6 +66,8 @@ const DataTable = ({ users, onDataChange }: DataTableProps) => {
               <th className="p-3 border-b">Document Type</th>
               <th className="p-3 border-b">Document Number</th>
               <th className="p-3 border-b">Country</th>
+              <th className="p-3 border-b">AuthScore</th>
+              <th className="p-3 border-b">Cursor</th>
               <th className="p-3 border-b text-right">Actions</th>
             </tr>
           </thead>

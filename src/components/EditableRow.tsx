@@ -47,6 +47,12 @@ const EditableRow = ({ user, onSave, onFinalize }: EditableRowProps) => {
         <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.country}</span>
       </td>
       <td className="p-3 border-b">
+        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.authenticity_score}</span>
+      </td>
+      <td className="p-3 border-b">
+        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.cursor_check}</span>
+      </td>
+      <td className="p-3 border-b">
         <div className="flex space-x-2 justify-end">
           {!user.finalized && (
             <>
