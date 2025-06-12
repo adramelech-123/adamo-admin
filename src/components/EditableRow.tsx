@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { UserData } from '@/types/user';
 import { Button } from '@/components/ui/button';
@@ -13,68 +12,38 @@ interface EditableRowProps {
 
 const EditableRow = ({ user, onSave, onFinalize }: EditableRowProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsEditing(false);
-  };
-
-  const handleFinalize = () => {
-    onFinalize(user.id);
-  };
+  
+  const cellClass = `p-3 border-b text-center ${user.finalized ? 'text-gray-500' : ''}`;
+  const userFields = [user.id, user.firstname, user.surname, user.doc_type, user.doc_num, user.country, user.authenticity_score, user.cursor_check];
 
   return (
-    <tr className={`${user.finalized ? 'bg-gray-100' : 'bg-white'}`}>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.id}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.firstname}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.surname}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.doc_type}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.doc_num}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.country}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.authenticity_score}</span>
-      </td>
-      <td className="p-3 border-b">
-        <span className={`${user.finalized ? 'text-gray-500' : ''}`}>{user.cursor_check}</span>
-      </td>
+    <tr className={user.finalized && user.authenticity_score===10 && user.cursor_check===0 ? 'bg-gray-100' : 'bg-white'}>
+      {userFields.map((field, index) => (
+        <td key={index} className={cellClass}>
+          <span>{field}</span>
+        </td>
+      ))}
       <td className="p-3 border-b">
         <div className="flex space-x-2 justify-end">
-          {!user.finalized && (
+          {!user.finalized || user.authenticity_score===0 || user.cursor_check===1 ? (
             <>
-              <Button variant="outline" size="sm" onClick={handleEdit}>
+              <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
                 <Edit className="h-4 w-4 mr-1" /> Edit
               </Button>
-              <Button variant="default" size="sm" onClick={handleFinalize}>
+              <Button variant="default" size="sm" onClick={() => onFinalize(user.id)}>
                 Finalize
               </Button>
             </>
-          )}
-          {user.finalized && (
+          ) : (
             <span className="text-sm text-gray-500 italic">Finalized</span>
           )}
         </div>
       </td>
       
-      {/* Edit Modal */}
       <UserEditModal 
         user={user} 
         isOpen={isEditing} 
-        onClose={handleCloseModal} 
+        onClose={() => setIsEditing(false)} 
         onSave={onSave} 
       />
     </tr>

@@ -74,7 +74,7 @@ const DataTable = ({ users, onDataChange }: DataTableProps) => {
           <tbody>
             {users.length === 0 ? (
               <tr>
-                <td colSpan={6} className="p-4 text-center">No user data available.</td>
+                <td colSpan={9} className="p-4 text-center">No user data available.</td>
               </tr>
             ) : (
               users.map(user => (
